@@ -1,0 +1,36 @@
+*{
+    margin: 0em;
+    padding:0em;
+}
+body{
+    
+}
+.App{
+    width:80%;
+    /* min-height: 80vh; */
+    height: max-content;
+    margin:auto;
+    margin-top: 2em;
+    
+}
+#App-header p{
+    text-align: center;
+    font-size: 4em;
+    
+}
+#App-header form input{
+    width: 95%;
+    /* height: 5vh; */
+    font-size: 1.5em;
+    padding:0.5em;
+    color: rgb(57, 57, 59);
+}
+
+#App-body li {
+    list-style-type: none;
+    border:1px solid rgb(219, 217, 217);
+    padding:0.5em;
+    font-size: 1.2em;
+    margin: 0.2em 0em;
+    box-shadow: 0.05em 0.05em grey;
+}

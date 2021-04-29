@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1613711376852" clover="3.2.0">
+  <project timestamp="1613711376852" name="All files">
+    <metrics statements="13" coveredstatements="13" conditionals="2" coveredconditionals="2" methods="8" coveredmethods="8" elements="23" coveredelements="23" complexity="0" loc="13" ncloc="13" packages="1" files="1" classes="1"/>
+    <file name="Tasklist.js" path="/home/raramuri/Desktop/react/react 1/to-do-list/src/task1_TodoList/Tasklist.js">
+      <metrics statements="13" coveredstatements="13" conditionals="2" coveredconditionals="2" methods="8" coveredmethods="8"/>
+      <line num="6" count="8" type="stmt"/>
+      <line num="7" count="8" type="stmt"/>
+      <line num="12" count="8" type="stmt"/>
+      <line num="13" count="8" type="stmt"/>
+      <line num="16" count="1" type="stmt"/>
+      <line num="19" count="2" type="stmt"/>
+      <line num="21" count="3" type="cond" truecount="2" falsecount="0"/>
+      <line num="22" count="1" type="stmt"/>
+      <line num="29" count="2" type="stmt"/>
+      <line num="31" count="2" type="stmt"/>
+      <line num="38" count="17" type="stmt"/>
+      <line num="55" count="7" type="stmt"/>
+      <line num="56" count="2" type="stmt"/>
+    </file>
+  </project>
+</coverage>

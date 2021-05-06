@@ -4,10 +4,10 @@ export default function HttpAdmin() {
   const [localStream, setlocalStream] = useState(null);
   const [remoteStream, setremoteStream] = useState(null);
   const [peerConn, setPeerConn] = useState(null);
-  const candidateData = {
+  const candidateData = useRef({
     offer: {},
     candidates: [],
-  };
+  });
   const adminData = useRef({
     answer: {},
     candidates: [],
@@ -41,7 +41,7 @@ export default function HttpAdmin() {
     peerConn.createAnswer(
       (answer) => {
         peerConn.setLocalDescription(answer);
-        adminData.answer = answer;
+        adminData.current.answer = answer;
 
         console.log(answer);
       },
@@ -52,47 +52,29 @@ export default function HttpAdmin() {
   };
 
   const joinCall = () => {
-    axios.get("https://1fd91683bdb5.ngrok.io/adminserve?email=rishi&qid=80",{
-      headers: {"Access-Control-Allow-Origin": "*"}
-    })
-      .then((response) => {
-        console.log("response")
-        console.log(response,response.data);
-        // refactorResponse(response);
-        // peerConn.setRemoteDescription(
-        //   new RTCSessionDescription(candidateData.offer)
-        // );
-        // createAndSendAnswer();
-        // candidateData.candidates.map((candidate) => {
-        //   peerConn.addIceCandidate(candidate);
-        // });
-
-        // //   console.log(response.data)
-        // console.log(JSON.parse(response.data));
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-
+    console.log("join request")
     navigator.mediaDevices
-      .getUserMedia({
-        video: {
-          frameRate: 24,
-          width: {
-            min: 480,
-            ideal: 720,
-            max: 1280,
-          },
-          aspectRatio: 1.33333,
+    .getUserMedia({
+      video: {
+        frameRate: 24,
+        width: {
+          min: 480,
+          ideal: 720,
+          max: 1280,
         },
-        audio: false,
-      })
-      .then((stream) => {
-        console.log("peer conn added");
-        handleLocalStream(stream);
-        setPeerConn(new RTCPeerConnection(configuration));
-      })
-      .catch(videoError);
+        aspectRatio: 1.33333,
+      },
+      audio: false,
+    })
+    .then((stream) => {
+      console.log("peer conn added");
+      handleLocalStream(stream);
+      setPeerConn(new RTCPeerConnection(configuration));
+    })
+    .catch(videoError);
+
+
+   
   };
 
   useEffect(() => {
@@ -100,6 +82,7 @@ export default function HttpAdmin() {
       return;
     }
     console.log("peerConn is changed");
+   
 
     peerConn.addStream(localStream);
 
@@ -110,17 +93,45 @@ export default function HttpAdmin() {
     };
     peerConn.onicecandidate = (e) => {
       if (e.candidate == null) {
-        if (adminData.candidates.length > 0) {
+        if (adminData.current.candidates.length > 0) {
           axios.post(
-            "https://1fd91683bdb5.ngrok.io/adminserve?email=rishi&qid=80",
+            "https://1fd91683bdb5.ngrok.io/adminget?email=rishi&qid=80",
 
-            adminData
+            adminData.current
           );
+          console.log(adminData.current)
         }
         return;
       }
-      adminData.candidates.push(e.candidate);
+      adminData.current.candidates.push(e.candidate);
     };
+
+    axios
+      .get(
+        "https://1fd91683bdb5.ngrok.io/adminserve?email=rishi&qid=80",
+        { crossdomain: true }
+      )
+      .then((response) => {
+        console.log(response.data);
+        candidateData.current.offer = response.data.offer
+        candidateData.current.candidates = response.data.candidates
+        console.log( candidateData.current.offer)
+        console.log(  candidateData.current.candidates)
+        peerConn.setRemoteDescription(
+          new RTCSessionDescription(candidateData.current.offer)
+        );
+        createAndSendAnswer();
+        candidateData.current.candidates.map((candidate) => {
+          peerConn.addIceCandidate(candidate);
+        });
+        
+
+        //   console.log(response.data)
+
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, [peerConn]);
 
   return (

@@ -9,14 +9,11 @@ import Tasklist from './task1_TodoList/Tasklist';
 import reportWebVitals from './reportWebVitals';
 import Candidate from './webRTC/Candidate'
 import Admin from './webRTC/Admin'
-import {BrowserRouter,Route} from 'react-router-dom';
 ReactDOM.render(
   
   <React.StrictMode>
-    <BrowserRouter>
-    <Route path="/admin" component={Admin} />
-    <Route path="/candidate" component={Candidate} />
-    </BrowserRouter>
+    <HttpAdmin/>
+    
    
     
   </React.StrictMode>,

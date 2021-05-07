@@ -55,26 +55,27 @@ export default function HttpAdmin() {
   };
 
   const joinCall = () => {
+    setPeerConn(new RTCPeerConnection(configuration));
     console.log("join request")
-    navigator.mediaDevices
-    .getUserMedia({
-      video: {
-        frameRate: 24,
-        width: {
-          min: 480,
-          ideal: 720,
-          max: 1280,
-        },
-        aspectRatio: 1.33333,
-      },
-      audio: false,
-    })
-    .then((stream) => {
-      console.log("peer conn added");
-      handleLocalStream(stream);
-      setPeerConn(new RTCPeerConnection(configuration));
-    })
-    .catch(videoError);
+    // navigator.mediaDevices
+    // .getUserMedia({
+    //   video: {
+    //     frameRate: 24,
+    //     width: {
+    //       min: 480,
+    //       ideal: 720,
+    //       max: 1280,
+    //     },
+    //     aspectRatio: 1.33333,
+    //   },
+    //   audio: false,
+    // })
+    // .then((stream) => {
+    //   console.log("peer conn added");
+    //   handleLocalStream(stream);
+     
+    // })
+    // .catch(videoError);
 
 
    
@@ -87,7 +88,7 @@ export default function HttpAdmin() {
     console.log("peerConn is changed");
    
 
-    peerConn.addStream(localStream);
+    // peerConn.addStream(localStream);
 
     peerConn.ontrack = (e) => {
       console.log("adding stream");
